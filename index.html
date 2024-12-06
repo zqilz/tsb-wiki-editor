@@ -1,626 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TSB Wiki Editor</title>
-  <link rel="icon" type="image/x-icon" href="https://zqilz.github.io/tsb-wiki-editor/icon.ico">
-<style>
-  :root {
---primary-red: #c53030;
---primary-grey: #2d3748;
---light-grey: #f7fafc;
---dark-grey: #eceff1;
---accent-red: #feb2b2;
---gradient-start: #801414;
---gradient-end: #801212;
-}
-
-*, *::before, *::after {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-
-body {
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-line-height: 1.6;
-color: var(--primary-grey);
-background: var(--light-grey);
-}
-
-.top-nav {
-background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
-padding: 1.25rem 2rem;
-display: flex;
-justify-content: space-between;
-align-items: center;
-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-font-size: 1.75rem;
-font-weight: 800;
-color: white;
-text-decoration: none;
-position: relative;
-padding-left: 2rem;
-}
-
-.nav-links a {
-margin-left: 2.5rem;
-text-decoration: none;
-color: white;
-font-weight: 500;
-position: relative;
-transition: color 0.3s ease;
-}
-
-.nav-links a::after {
-content: '';
-position: absolute;
-width: 0;
-height: 2px;
-bottom: -4px;
-left: 0;
-background-color: var(--accent-red);
-transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after {
-width: 100%;
-}
-
-/* Main Content */
-.content-wrapper {
-max-width: 1200px;
-margin: 2rem auto;
-padding: 2rem 2rem;
-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-border-radius: 10px;
-background: var(--dark-grey);
-}
-
-.main-content {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 3rem;
-margin-bottom: 4rem;
-}
-
-/* Tech Info Section */
-.tech-info h1 {
-color: var(--primary-red);
-font-size: 2.5rem;
-margin-bottom: 1.5rem;
-font-weight: 800;
-}
-
-.tech-description {
-font-size: 1.1rem;
-line-height: 1.8;
-}
-
-/* Video and Specs */
-.video-container {
-aspect-ratio: 16 / 9;
-background: var(--primary-grey);
-border-radius: 8px;
-margin-bottom: 2rem;
-overflow: hidden;
-}
-
-.video-container iframe,
-.video-container video {
-width: 100%;
-height: 100%;
-object-fit: cover;
-}
-
-.tech-specs {
-background: white;
-padding: 1.5rem;
-border-radius: 8px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.tech-specs h2 {
-color: var(--primary-red);
-margin-bottom: 1rem;
-font-size: 1.5rem;
-}
-
-.tech-specs ul {
-list-style: none;
-}
-
-.tech-specs li {
-margin-bottom: 0.75rem;
-display: flex;
-align-items: center;
-}
-
-.tech-specs li span {
-font-weight: 600;
-margin-right: 0.5rem;
-min-width: 100px;
-}
-
-/* Guides Section */
-.guides-section {
-background: white;
-padding: 2rem;
-border-radius: 8px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.guides-section h2 {
-color: var(--primary-red);
-margin-bottom: 2rem;
-font-size: 2rem;
-}
-
-.guides-container {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 2rem;
-}
-
-.video-guides h3,
-.text-guides h3 {
-color: var(--primary-grey);
-margin-bottom: 1rem;
-font-size: 1.25rem;
-}
-
-.video-guides ul {
-list-style: none;
-}
-
-.video-guides li {
-margin-bottom: 0.75rem;
-}
-
-.guide-content {
-background: var(--light-grey);
-padding: 1.5rem;
-border-radius: 6px;
-}
-
-.guide-content h4 {
-color: var(--primary-grey);
-margin-bottom: 1rem;
-font-size: 1.1rem;
-}
-
-.guide-content ol {
-padding-left: 1.5rem;
-}
-
-.guide-content li {
-margin-bottom: 0.5rem;
-}
-
-.video-guides a{
-color: var(--primary-red);
-text-decoration: none;
-transition: color 0.3s ease;
-}
-
-.video-guides a:hover{ 
-color: var(--gradient-start);
-}
-
-.contributor a {
-color: var(--primary-red);
-text-decoration: none;
-transition: color 0.3s ease;
-}
-
-.contributor a:hover {
-color: var(--gradient-start);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-.main-content,
-.guides-container {
-grid-template-columns: 1fr;
-gap: 2rem;
-}
-
-.content-wrapper {
-padding: 0 1rem;
-margin: 1rem auto;
-}
-
-.nav-links a {
-margin-left: 1.5rem;
-}
-}
-
-.toolbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    gap: 1rem;
-    z-index: 1000;
-}
-
-.toolbar button {
-    padding: 0.5rem 1rem;
-    background: var(--primary-red);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.toolbar button:hover {
-    background: var(--gradient-start);
-}
-
-.url-input {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    display: none;
-    z-index: 1001;
-}
-
-.url-input.active {
-    display: block;
-}
-
-.url-input input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-[contenteditable] {
-    outline: 1px dashed #ccc;
-    padding: 0.25rem;
-    min-height: 1em;
-}
-
-[contenteditable]:focus {
-    outline: 2px solid var(--primary-red);
-}
-
-.content-wrapper {
-    margin-top: 5rem;
-}
-
-/* Editor-specific styles */
-
-.floating-toolbar .format-group {
-    display: flex;
-    gap: 4px;
-    padding-right: 8px;
-    border-right: 1px solid #ddd;
-    margin-right: 8px;
-}
-
-.floating-toolbar button {
-    padding: 4px 8px;
-    background: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.floating-toolbar button:hover {
-    background: #e5e5e5;
-}
-
-.url-input {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    display: none;
-    z-index: 1001;
-}
-
-.url-input.active {
-    display: block;
-}
-
-.fixed-toolbar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding: 1rem;
-    background: white;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-}
-
-.editor-controls {
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding: 1rem;
-    background: white;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    gap: 0.75rem;
-    z-index: 1000;
-}
-
-.editor-controls button {
-    padding: 0.5rem 1rem;
-    background: var(--primary-red);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: background-color 0.2s ease;
-}
-
-.editor-controls button:hover {
-    background: var(--gradient-start);
-}
-
-/* Floating formatting toolbar */
-.floating-toolbar {
-    position: absolute;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 6px;
-    z-index: 1000;
-    display: none;
-    gap: 4px;
-}
-
-.format-group {
-    display: flex;
-    gap: 4px;
-    padding: 0 8px;
-    border-right: 1px solid #ddd;
-}
-
-.format-group:last-child {
-    border-right: none;
-}
-
-.floating-toolbar button {
-    padding: 6px 10px;
-    background: #f8f9fa;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.875rem;
-    color: var(--primary-grey);
-    transition: all 0.2s ease;
-}
-
-.floating-toolbar button:hover {
-    background: #e2e8f0;
-    color: var(--primary-red);
-}
-
-/* URL input dialog */
-.url-input {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    display: none;
-    z-index: 1001;
-    width: 90%;
-    max-width: 400px;
-}
-
-.url-input.active {
-    display: block;
-}
-
-.url-input input {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.url-input input:focus {
-    outline: none;
-    border-color: var(--primary-red);
-    box-shadow: 0 0 0 3px var(--accent-red);
-}
-
-.url-input-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-}
-
-.url-input button {
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-}
-
-.url-input button:first-child {
-    background: var(--primary-red);
-    color: white;
-    border: none;
-}
-
-.url-input button:last-child {
-    background: white;
-    color: var(--primary-grey);
-    border: 1px solid #e2e8f0;
-}
-
-.url-input button:hover {
-    opacity: 0.9;
-}
-
-/* Editable content styling */
-[contenteditable="true"] {
-    outline: 2px solid transparent;
-    border-radius: 4px;
-    padding: 0.5rem;
-    transition: outline-color 0.2s ease;
-}
-
-[contenteditable="true"]:hover {
-    outline-color: #e2e8f0;
-}
-
-[contenteditable="true"]:focus {
-    outline-color: var(--primary-red);
-    background: rgba(255, 255, 255, 0.5);
-}
-
-/* Overlay for modal background */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 1000;
-}
-
-.modal-overlay.active {
-    display: block;
-}
-    </style>
+  <link rel="icon" type="image/x-icon" href="icon.ico">
+  <link rel="stylesheet" href="editor.css">
 </head>
+
 <body>
-    <!-- Floating format toolbar -->
-    <div class="floating-toolbar" id="formatToolbar">
-        <div class="format-group">
-            <button onclick="formatText('bold')" title="Bold (Ctrl+B)">B</button>
-            <button onclick="formatText('italic')" title="Italic (Ctrl+I)">I</button>
-            <button onclick="formatText('underline')" title="Underline (Ctrl+U)">U</button>
+  <!-- Floating format toolbar -->
+  <div class="floating-toolbar" id="formatToolbar">
+    <div class="format-group">
+      <button onclick="formatText('bold')" title="Bold (Ctrl+B)">B</button>
+      <button onclick="formatText('italic')" title="Italic (Ctrl+I)">I</button>
+      <button onclick="formatText('underline')" title="Underline (Ctrl+U)">U</button>
+    </div>
+    <div class="format-group">
+      <button onclick="insertList('unordered')" title="Bullet List">•</button>
+      <button onclick="insertList('ordered')" title="Numbered List">1.</button>
+      <button onclick="addLink()" title="Add Link">🔗</button>
+    </div>
+  </div>
+
+  <!-- Fixed toolbar for global actions -->
+  <div class="editor-controls">
+    <button onclick="addYouTubeVideo()" title="Add YouTube Video">
+      Add Video
+    </button>
+    <button onclick="saveChanges()" title="Save to Local Storage">
+      Save Changes
+    </button>
+    <button onclick="downloadJSON()" title="Download as JSON">
+      Download JSON
+    </button>
+  </div>
+
+  <!-- URL input dialog (reused for both video and links) -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="url-input" id="urlInput">
+    <div class="url-input-buttons">
+      <button onclick="confirmURL()">Confirm</button>
+      <button onclick="cancelURL()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="content-wrapper" role="main">
+    <div class="main-content">
+      <div class="section tech-info">
+        <h1 id="edit_title" contenteditable="true">Tech/Combo name (e.g. Kyoto Combo)</h1>
+        <div id="edit_description" class="tech-description" contenteditable="true">
+          This is the description section. Just write a short description of the tech/combo that you're writing about.
+          Cover the pros & cons of this tech. You may be subjective, but don't take it too far. Write about this long.
         </div>
-        <div class="format-group">
-            <button onclick="insertList('unordered')" title="Bullet List">•</button>
-            <button onclick="insertList('ordered')" title="Numbered List">1.</button>
-            <button onclick="addLink()" title="Add Link">🔗</button>
+      </div>
+
+      <div class="section tech-showcase">
+        <div id="video-container" class="video-container"></div>
+        <div id="edit_specs" class="tech-specs" contenteditable="true">
+          <div>Author: Kyoto - <strong>This is not necessary</strong></div>
+          <div>Character: Garou - <strong>This is necessary for both techs and combos. You can also use
+              "Universal"</strong></div>
+          <div>Difficulty: 3.0 - <strong>Necessary, 1.0-5.0. Only write 1 difficulty, don't make a range.</strong></div>
+          <div>Damage: 80% - <strong>Necessary for combos. If multiple variants, write the range (e.g. 40-80%)</strong>
+          </div>
         </div>
+      </div>
     </div>
 
-    <!-- Fixed toolbar for global actions -->
-    <div class="editor-controls">
-        <button onclick="addYouTubeVideo()" title="Add YouTube Video">
-            Add Video
-        </button>
-        <button onclick="saveChanges()" title="Save to Local Storage">
-            Save Changes
-        </button>
-        <button onclick="downloadJSON()" title="Download as JSON">
-            Download JSON
-        </button>
-    </div>
-
-    <!-- URL input dialog (reused for both video and links) -->
-    <div class="modal-overlay" id="modalOverlay"></div>
-    <div class="url-input" id="urlInput">
-        <input type="text" id="url-input-field" placeholder="Enter URL">
-        <div class="url-input-buttons">
-            <button onclick="confirmURL()">Confirm</button>
-            <button onclick="cancelURL()">Cancel</button>
-        </div>
-    </div>
-
-    <div class="content-wrapper" role="main">
-        <div class="main-content">
-            <div class="section tech-info">
-                <h1 id="edit_title" contenteditable="true">Kyoto Combo</h1>
-                <div id="edit_description" class="tech-description" contenteditable="true">
-                    One of the most famous combo in the game. Although it is no longer very
-                    viable, being outperformed by other, simpler yet more reliable combos,
-                    it still remains as a relic of the past.
-                </div>
-            </div>
-
-            <div class="section tech-showcase">
-                <div id="video-container" class="video-container"></div>
-                <div id="edit_specs" class="tech-specs" contenteditable="true">
-                    <div>Author: Kyoto</div>
-                    <div>Character: Garou</div>
-                    <div>Difficulty: 3.0</div>
-                    <div>Damage: 40-80%</div>
-                </div>
-            </div>
+    <div class="section guides-section">
+      <h2>Guides</h2>
+      <div class="guides-container">
+        <div class="video-guides">
+          <h3>Video Tutorials</h3>
+          <div id="edit_video_guides" contenteditable="true">
+            <ul>
+              <li>This is the video guides section</li>
+              <li>usually you'd want to use non-numbered lists here. use the emoji ⭐ for good tutorials</li>
+              <li><a href="https://www.youtube.com/watch?v=FGuTHmqElJo">SenseiNoob's tutorial ⭐</a> - Lee's Twisted</li>
+            </ul>
+          </div>
         </div>
 
-        <div class="section guides-section">
-            <h2>Guides</h2>
-            <div class="guides-container">
-                <div class="video-guides">
-                    <h3>Video Tutorials</h3>
-                    <div id="edit_video_guides" contenteditable="true">
-                        - [Wiki's tutorial ⭐]
-                        - rapidFruit's tutorial ⭐
-                        - zHyperKing's tutorial ⭐
-                        - Zeyu's tutorial
-                    </div>
-                </div>
-
-                <div class="text-guides">
-                    <h3>Written Guides</h3>
-                    <div id="edit_text_guides" class="guide-content" contenteditable="true">
-                        1. 4 m1, side dash towards enemy, flowing water
-                        2. After flowing ends, quickly side dash towards enemy and lethal
-                           whirlwind stream at the same time.
-                        3. (Option 1, 60% damage) Hold space, hunter's grasp, 4 m1
-                        4. (Option 2, 80% damage) Loop dash, 3 m1, downslam, hunter's grasp, 4 m1
-
-                        Note: The laggier the opponent, the easier to land the combo.
-                    </div>
-                </div>
-            </div>
-
-            <div id="edit_contributor" class="contributor" contenteditable="true">
-                written by: zqil
-            </div>
+        <div class="text-guides">
+          <h3>Written Guides</h3>
+          <div id="edit_text_guides" class="guide-content" contenteditable="true">
+            <ol>
+              <li>This is the written guides section</li>
+              <li>Usually you'd want to use numbered lists here</li>
+              <li>if there are multiple variants, cover them all.</li>
+            </ol>
+          </div>
         </div>
+      </div>
+
+      <div id="edit_contributor" class="contributor" contenteditable="true">
+        written by: <a href="https://www.youtube.com/@Zqily">zqil</a>
+      </div>
     </div>
-    <script type="text/javascript" src="./video_manager.js"></script>
-<!-- Replace the existing script section with this -->
-<script type="module">
+  </div>
+  <script type="text/javascript" src="./video_manager.js"></script>
+  <script type="module">
     import { urlManager } from './url_manager.js';
-    
+
     let selectedRange = null;
     const toolbar = document.getElementById('formatToolbar');
-  
+
     // Make selectedRange available to URL manager
     window.selectedRange = null;
-  
+
     // Show floating toolbar on text selection
-    document.addEventListener('selectionchange', function() {
+    document.addEventListener('selectionchange', function () {
       const selection = window.getSelection();
       if (!selection.isCollapsed) {
         selectedRange = selection.getRangeAt(0);
@@ -635,24 +126,24 @@ margin-left: 1.5rem;
         window.selectedRange = null;
       }
     });
-  
+
     // Text formatting functions
     function formatText(command) {
       document.execCommand(command, false, null);
     }
     window.formatText = formatText;
-  
+
     function insertList(type) {
       document.execCommand(type === 'ordered' ? 'insertOrderedList' : 'insertUnorderedList', false, null);
     }
     window.insertList = insertList;
-  
+
     // URL-related functions
     function addYouTubeVideo() {
       urlManager.showURLPrompt('video');
     }
     window.addYouTubeVideo = addYouTubeVideo;
-  
+
     function addLink() {
       if (!selectedRange) {
         alert('Please select some text first');
@@ -661,7 +152,7 @@ margin-left: 1.5rem;
       urlManager.showURLPrompt('link');
     }
     window.addLink = addLink;
-  
+
     // Set up URL input handlers
     document.querySelector('.url-input-buttons').addEventListener('click', (e) => {
       const action = e.target.textContent.trim().toLowerCase();
@@ -671,7 +162,7 @@ margin-left: 1.5rem;
         urlManager.hideURLPrompt();
       }
     });
-  
+
     // Save and load functions
     function saveChanges() {
       const data = {
@@ -683,12 +174,12 @@ margin-left: 1.5rem;
         edit_text_guides: document.getElementById('edit_text_guides').innerHTML,
         edit_contributor: document.getElementById('edit_contributor').innerHTML
       };
-      
+
       localStorage.setItem('wikiContent', JSON.stringify(data));
       alert('Changes saved!');
     }
     window.saveChanges = saveChanges;
-  
+
     function downloadJSON() {
       const data = {
         edit_title: document.getElementById('edit_title').innerHTML,
@@ -699,7 +190,7 @@ margin-left: 1.5rem;
         edit_text_guides: document.getElementById('edit_text_guides').innerHTML,
         edit_contributor: document.getElementById('edit_contributor').innerHTML
       };
-      
+
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -711,9 +202,9 @@ margin-left: 1.5rem;
       URL.revokeObjectURL(url);
     }
     window.downloadJSON = downloadJSON;
-  
+
     // Initialize from localStorage
-    window.onload = function() {
+    window.onload = function () {
       const savedContent = localStorage.getItem('wikiContent');
       if (savedContent) {
         const data = JSON.parse(savedContent);
@@ -723,18 +214,18 @@ margin-left: 1.5rem;
             element.innerHTML = data[key];
           }
         });
-        
+
         if (data.video_url) {
           const container = document.getElementById('video-container');
           container.innerHTML = `<iframe width="100%" height="100%" src="${data.video_url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
         }
       }
     };
-  
+
     // Add keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
       if (e.ctrlKey || e.metaKey) {
-        switch(e.key.toLowerCase()) {
+        switch (e.key.toLowerCase()) {
           case 'b':
             e.preventDefault();
             formatText('bold');
@@ -752,4 +243,5 @@ margin-left: 1.5rem;
     });
   </script>
 </body>
+
 </html>
